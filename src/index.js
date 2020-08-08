@@ -8,7 +8,7 @@ function loop() {
     console.log("tunts")
     draw()
     beat()
-    setTimeout(loop, ms)
+    setTimeout(loop, ms/4)
 }
 
 function beat() {
