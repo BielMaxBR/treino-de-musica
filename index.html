@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>beats</title>
     <style>
@@ -12,27 +13,33 @@
             padding: 0;
     
         }
+        body {
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+        }
 
+        div {
+            display: flex;
+            flex-direction: column;
+        }
         #canvas { 
             background: #000;
             margin: auto;
-            position: absolute;
-            top: 0px;
-            bottom: 0px;
-            Left: 0px;
-            right: 0px;
-            border: 8px solid grey;
+            margin-bottom: 10px;
+            border: 3px solid grey;
             image-rendering: pixelated;
             image-rendering: crisp-edges;
             image-rendering: -moz-crisp-edges;
-            width: 400px;
-            height: 100px;
+            /* width: 400px; */
+            height: 50px;
         }
     </style>
 </head>
 <body>
-    <audio src="/Hit_Hurt2.wav"></audio>
-    <canvas id="canvas" width="4" height="1"></canvas>
+    <audio id="som" src="./src/Hit_Hurt2.wav"></audio>
+    <!-- <canvas id="canvas" width="4" height="1"></canvas> -->
+    <div></div>
     <script src="./src/index.js"></script>
 </body>
 </html>
