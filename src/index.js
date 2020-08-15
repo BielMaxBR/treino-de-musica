@@ -7,10 +7,16 @@ var hihat = document.getElementById('hihat')
 var batidaList = []
 var pause = false
 class batida {
-    constructor(tempo, som) {
+    constructor(tempo, somText) {
         this.tempo = tempo
         this.batida = 0
-        this.som = som
+        this.somText = somText
+        if (this.som == "kick") {
+            var som = kick
+        }
+        if (this.som == "hihat") {
+            var som = hihat
+        }
         var quatro = document.createElement('canvas')
         quatro.id = 'canvas'
         quatro.width = this.tempo
@@ -29,13 +35,8 @@ class batida {
                 this.batida = 1
             }
             if (this.batida == 1) {
-                if (this.som == "kick") {
-                    var promisse = kick.play()
-                }
-                if (this.som == "hihat") {
-                    var promisse = hihat.play()
-                }
-                
+                som.stop()
+                var promisse = som.play()
                 if (promisse !== undefined) {
                     promisse.then(_ => {
                         // Autoplay started!
