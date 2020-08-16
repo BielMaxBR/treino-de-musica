@@ -2,10 +2,10 @@ var bpm = 120
 var toque = 1000/bpm*60
 var quarta = toque/4
 var list = document.querySelector('div')
+var pause = false
 // var kick = document.getElementById('kick')
 // var hihat = document.getElementById('hihat')
 var batidaList = []
-var pause = false
 class batida {
     constructor(tempo, somText) {
         this.tempo = tempo
@@ -35,16 +35,15 @@ class batida {
                 this.batida = 1
             }
             if (this.batida == 1) {
-                const noiseSynth = new Tone.NoiseSynth().toDestination();
-                noiseSynth.triggerAttackRelease("8n", 0.05);
-                console.log(noiseSynth)
+                kick()
+
             }
             this.draw(this.batida)
         }
-
+        
     }
 }
-var um = new batida(4, "hihat")
+var um = new batida(4, "kick")
 batidaList.push(um)
 function loop() {
     // console.log("life could be a dream")
@@ -69,3 +68,15 @@ function fpause() {
     }
     else {pause = true}
 }
+
+
+function kick() {
+    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+    const now = Tone.now()
+    synth.triggerAttack("D4", now);
+    synth.triggerAttack("F4", now + 0.5);
+    synth.triggerAttack("A4", now + 1);
+    synth.triggerAttack("C4", now + 1.5);
+    synth.triggerAttack("E4", now + 2);
+    synth.triggerRelease(["D4", "F4", "A4", "C4", "E4"], now + 4);
+    }
