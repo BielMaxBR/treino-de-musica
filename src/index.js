@@ -2,8 +2,8 @@ var bpm = 120
 var toque = 1000/bpm*60
 var quarta = toque/4
 var list = document.querySelector('div')
-var kick = document.getElementById('kick')
-var hihat = document.getElementById('hihat')
+// var kick = document.getElementById('kick')
+// var hihat = document.getElementById('hihat')
 var batidaList = []
 var pause = false
 class batida {
@@ -12,10 +12,10 @@ class batida {
         this.batida = 0
         this.somText = somText
         if (this.som == "kick") {
-            var som = kick
+            // var som = kick
         }
         if (this.som == "hihat") {
-            var som = hihat
+            // var som = hihat
         }
         var quatro = document.createElement('canvas')
         quatro.id = 'canvas'
@@ -35,23 +35,16 @@ class batida {
                 this.batida = 1
             }
             if (this.batida == 1) {
-                som.stop()
-                var promisse = som.play()
-                if (promisse !== undefined) {
-                    promisse.then(_ => {
-                        // Autoplay started!
-                    }).catch(error => {
-                        // Autoplay was prevented.
-                        // Show a "Play" button so that user can start playback.
-                    })
-                }
+                const noiseSynth = new Tone.NoiseSynth().toDestination();
+                noiseSynth.triggerAttackRelease("8n", 0.05);
+                console.log(noiseSynth)
             }
             this.draw(this.batida)
         }
 
     }
 }
-var um = new batida(4, "kick")
+var um = new batida(4, "hihat")
 batidaList.push(um)
 function loop() {
     // console.log("life could be a dream")
