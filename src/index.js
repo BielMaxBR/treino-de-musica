@@ -6,10 +6,12 @@ var pause = false
 // var kick = document.getElementById('kick')
 // var hihat = document.getElementById('hihat')
 var batidaList = []
+Tone.start()
+
 class batida {
-    constructor(tempo, somText) {
+    constructor(tempo, somText, adianto = 0) {
         this.tempo = tempo
-        this.batida = 0
+        this.batida = 0 + adianto
         this.somText = somText
         if (this.som == "kick") {
             // var som = kick
@@ -24,11 +26,17 @@ class batida {
         quatro.style = { "width": `${quatro.width * 50}px` }
         list.appendChild(quatro)
         var ctx = quatro.getContext("2d")
-        ctx.fillStyle = "#fff"
+        
         this.draw = function (batida) {
             ctx.clearRect(0, 0, tempo, 1)
+            if (batida == 1) {
+                ctx.fillStyle = "yellow"
+                ctx.fillRect(0,0,tempo,1)
+            }
+            ctx.fillStyle = "#fff"
             ctx.fillRect(batida - 1, 0, 1, 1)
         }
+
         this.update = function () {
             this.batida += 1
             if (this.batida > this.tempo) {
@@ -36,17 +44,21 @@ class batida {
             }
             if (this.batida == 1) {
                 kick()
-
             }
             this.draw(this.batida)
         }
         
     }
 }
+
+
 var um = new batida(4, "kick")
-batidaList.push(um)
+var dois = new batida(4, "kick", 1)
+var tres = new batida(4, "kick", 2)
+
+batidaList.push(um,dois,tres)
 function loop() {
-    // console.log("life could be a dream")
+
     if (!pause) {
         for (const batida in batidaList) {
             batidaList[batida].update()
@@ -71,12 +83,7 @@ function fpause() {
 
 
 function kick() {
-    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-    const now = Tone.now()
-    synth.triggerAttack("D4", now);
-    synth.triggerAttack("F4", now + 0.5);
-    synth.triggerAttack("A4", now + 1);
-    synth.triggerAttack("C4", now + 1.5);
-    synth.triggerAttack("E4", now + 2);
-    synth.triggerRelease(["D4", "F4", "A4", "C4", "E4"], now + 4);
+    
+    var noiseSynth = new Tone.NoiseSynth().toDestination();
+    noiseSynth.triggerAttackRelease("8n");
     }
