@@ -84,6 +84,65 @@ function fpause() {
 
 function kick() {
     
-    var noiseSynth = new Tone.NoiseSynth().toDestination();
-    noiseSynth.triggerAttackRelease("8n");
+    // var noiseSynth = new Tone.NoiseSynth().toDestination();
+    // noiseSynth.triggerAttackRelease("8n");
     }
+
+document.addEventListener('keydown', (event)=>{
+    if (event.key.toLowerCase() == "q") {
+        //create a synth and connect it to the main output (your speakers)
+    const synth = new Tone.Synth().toDestination();
+
+    //play a middle 'C' for the duration of an 8th note
+    synth.triggerAttackRelease("C4", "8n");
+    }
+    else if (event.key.toLowerCase() == "w") {
+        //create a synth and connect it to the main output (your speakers)
+    const synth = new Tone.Synth().toDestination();
+
+    //play a middle 'C' for the duration of an 8th note
+    synth.triggerAttackRelease("D4", "8n");
+    }
+    else if (event.key.toLowerCase() == "e") {
+        //create a synth and connect it to the main output (your speakers)
+    const synth = new Tone.Synth().toDestination();
+
+    //play a middle 'C' for the duration of an 8th note
+    synth.triggerAttackRelease("E4", "8n");
+    }
+    else if (event.key.toLowerCase() == "r") {
+        //create a synth and connect it to the main output (your speakers)
+    const synth = new Tone.Synth().toDestination();
+
+    //play a middle 'C' for the duration of an 8th note
+    synth.triggerAttackRelease("F4", "8n");
+    }
+    else if (event.key.toLowerCase() == "t") {
+        //create a synth and connect it to the main output (your speakers)
+    const synth = new Tone.Synth().toDestination();
+
+    //play a middle 'C' for the duration of an 8th note
+    synth.triggerAttackRelease("G4", "8n");
+    }
+    else if (event.key.toLowerCase() == "y") {
+        //create a synth and connect it to the main output (your speakers)
+    const synth = new Tone.Synth().toDestination();
+
+    //play a middle 'C' for the duration of an 8th note
+    synth.triggerAttackRelease("A4", "8n");
+    }
+    else if (event.key.toLowerCase() == "u") {
+        //create a synth and connect it to the main output (your speakers)
+    const synth = new Tone.Synth().toDestination();
+
+    //play a middle 'C' for the duration of an 8th note
+    synth.triggerAttackRelease("B4", "8n");
+    }
+    else if (event.key.toLowerCase() == "i") {
+        //create a synth and connect it to the main output (your speakers)
+    const synth = new Tone.Synth().toDestination();
+
+    //play a middle 'C' for the duration of an 8th note
+    synth.triggerAttackRelease("C5", "8n");
+    }
+})
