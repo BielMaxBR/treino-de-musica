@@ -2,7 +2,7 @@ import Orbit from "./classes/Orbit.js";
 
 const config = {
   type: Phaser.CANVAS,
-    width: 500,
+    width: 700,
     height: 500,
     canvas: document.getElementById('canvas'),
     scene: {
