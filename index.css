@@ -1,0 +1,37 @@
+body {
+  background: #DDDDDD;
+  margin: 0;
+  padding: 0;
+  /* overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  display: flex; */
+}
+
+canvas {
+  background: #000;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  
+  border: 5px solid grey;
+}
+
+@media(max-width: 720px){
+  canvas {
+    image-rendering: pixelated;
+    position: relative;
+    width: 95%;
+    max-height: 720px;
+  }
+}
+@media(min-width: 721px){
+  canvas {
+    position: relative;
+    /* margin-top: 5%; */
+    height: 90%;
+    /* max-height: 720px; */
+  }
+}

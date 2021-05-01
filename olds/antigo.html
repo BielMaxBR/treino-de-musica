@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.43/Tone.js" ></script>
+    <title>beats</title>
+    <style>
+        html, body {
+            background: #000;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+    
+        }
+        body {
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+        }
+        #canvas { 
+            background: #000;
+            margin: auto;
+            margin-bottom: 10px;
+            border: 3px solid grey;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            image-rendering: -moz-crisp-edges;
+            /* width: 400px; */
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <audio id="kick" preload="auto" src="./src/kick.wav"></audio>
+    <audio id="hihat" preload="auto" src="./src/hihat.mp3"></audio>
+    <!-- <canvas id="canvas" width="4" height="1"></canvas> -->
+    <div></div>
+    <script src="./src/antigo.js"></script>
+</body>
+</html>
