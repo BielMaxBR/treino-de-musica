@@ -8,13 +8,18 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     this.planeta;
     this.sol;
   }
+  
+  setOrbita(val) {
+    this.orbita = 
+    Math.min(Math.max(val, 1), 4);
+  }
 
   preload() {
     this.scene.load.image('test', './assets/test.png')
   }
 
   create() {
-    this.sol = this.scene.add.sprite(this.x,this.y, 'test')
-    this.planeta = this.scene.add.sprite(this.x,this.y-100, 'test')
+    this.sol = this.scene.add.sprite(this.x,this.y, 'sol')
+    this.planeta = this.scene.add.sprite(this.x,this.y-100, 'planeta')
   }
 }

@@ -19,6 +19,8 @@ let button;
 
 function preload() {
   this.load.image('test', './src/assets/test.png')
+  this.load.image('sol', './src/assets/sol.png')
+  this.load.image('planeta', './src/assets/planeta.png')
   orbit  = new Orbit(this, 250, 250)
   console.log(this)
 }
@@ -27,24 +29,29 @@ function create() {
   button = this.add.sprite(50, 350, 'test').setInteractive();
 
   button.on('pointerdown', function (pointer) {
-    console.log('click')
+    orbit.setOrbita(orbit.orbita-1)
   });
 
   orbit.create(this)
 
 }
 let isBeating = false
+
 function update() {
-  let pos = Phaser.Math.RotateAround(new Phaser.Geom.Point(orbit.planeta.x,orbit.planeta.y), 250, 250, Phaser.Math.DegToRad(180/60))
+  let pos = Phaser.Math.RotateAroundDistance(
+    new Phaser.Geom.Point(orbit.planeta.x,orbit.planeta.y),
+    250,
+    250,
+    Phaser.Math.DegToRad(360/(120)*(4/orbit.orbita)),
+    100/4*orbit.orbita
+  )
   orbit.planeta.x = pos.x
   orbit.planeta.y = pos.y
-  let rad = Phaser.Math.Angle.Between(orbit.planeta.x, orbit.planeta.y, orbit.x, orbit.y);
-  let deg = Phaser.Math.RadToDeg(rad)-90
-  
-  if (deg > -7 && deg < 7) { 
+
+  if (orbit.planeta.x-orbit.sol.x > -7 && orbit.planeta.x-orbit.sol.x < 7) { 
     if (!isBeating) {
       isBeating = true
-      button.x += 32
+      button.x += 20
     }
   }
   else {
