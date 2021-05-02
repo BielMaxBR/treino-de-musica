@@ -36,8 +36,14 @@ function create() {
 
 function update() {
   // Phaser.Actions.RotateAroundDistance(orbit, this.geomPoint, 0.095, 100);
-  let pos = Phaser.Math.RotateAround(new Phaser.Geom.Point(orbit.planeta.x,orbit.planeta.y), 250, 250, 0.1)
+  let pos = Phaser.Math.RotateAround(new Phaser.Geom.Point(orbit.planeta.x,orbit.planeta.y), 250, 250, Phaser.Math.DegToRad(180/60))
   orbit.planeta.x = pos.x
   orbit.planeta.y = pos.y
-  // console.log(pos)
+  let rad = Phaser.Math.Angle.Between(orbit.planeta.x-25, orbit.planeta.y, orbit.x, orbit.y);
+  let Srad = rad.toString()
+
+  if (Srad.slice(0, 3) == "1.0") {
+    button.x += 20
+  }
+  
 }
