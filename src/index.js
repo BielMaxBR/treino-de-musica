@@ -33,17 +33,22 @@ function create() {
   orbit.create(this)
 
 }
-
+let isBeating = false
 function update() {
-  // Phaser.Actions.RotateAroundDistance(orbit, this.geomPoint, 0.095, 100);
   let pos = Phaser.Math.RotateAround(new Phaser.Geom.Point(orbit.planeta.x,orbit.planeta.y), 250, 250, Phaser.Math.DegToRad(180/60))
   orbit.planeta.x = pos.x
   orbit.planeta.y = pos.y
-  let rad = Phaser.Math.Angle.Between(orbit.planeta.x-25, orbit.planeta.y, orbit.x, orbit.y);
-  let Srad = rad.toString()
-
-  if (Srad.slice(0, 3) == "1.0") {
-    button.x += 20
+  let rad = Phaser.Math.Angle.Between(orbit.planeta.x, orbit.planeta.y, orbit.x, orbit.y);
+  let deg = Phaser.Math.RadToDeg(rad)-90
+  
+  if (deg > -7 && deg < 7) { 
+    if (!isBeating) {
+      isBeating = true
+      button.x += 32
+    }
+  }
+  else {
+    isBeating = false
   }
   
 }
