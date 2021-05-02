@@ -21,11 +21,14 @@ function preload() {
   this.load.image('test', './src/assets/test.png')
   this.load.image('sol', './src/assets/sol.png')
   this.load.image('planeta', './src/assets/planeta.png')
+  
+  this.load.audio('beat', './src/assets/hihat.mp3')
   orbit  = new Orbit(this, 250, 250)
   console.log(this)
 }
 
 function create() { 
+  this.beat = this.sound.add('beat')
   button = this.add.sprite(50, 350, 'test').setInteractive();
 
   button.on('pointerdown', function (pointer) {
@@ -51,7 +54,8 @@ function update() {
   if (orbit.planeta.x-orbit.sol.x > -7 && orbit.planeta.x-orbit.sol.x < 7) { 
     if (!isBeating) {
       isBeating = true
-      button.x += 20
+      //button.x += 20
+      this.beat.play()
     }
   }
   else {
