@@ -22,7 +22,7 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     350,
     250,
     Phaser.Math.DegToRad(360/(bpm)*(4/this.orbita)),
-    100/4*this.orbita
+    120/4*this.orbita
   )
   this.planeta.x = pos.x
   this.planeta.y = pos.y
