@@ -14,8 +14,8 @@ export default class Game extends Phaser.Scene {
     this.orbit = new Orbit(this, 350, 250)
   
     this.button.on('pointerdown', (pointer) => {
-      //this.orbit.setOrbita(this.orbit.orbita - 1)
-      this.sound.play('beat')
+      this.orbit.setOrbita(this.orbit.orbita - 1)
+      //this.sound.play('beat')
     });
     
   }
