@@ -30,7 +30,7 @@ export default class Loading extends Phaser.Scene {
   }
   update() {
    //if(ready) {
-    this.scene.start("Game", {bpm:120,music:'orbitando'})
+    this.scene.start("Game", {bpm:150,music:'orbitando'})
     //}
   }
 }

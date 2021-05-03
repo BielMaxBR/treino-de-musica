@@ -4,53 +4,43 @@ import Button from '../classes/Button.js'
 export default class Game extends Phaser.Scene {
   constructor() {
     super("Game")
+    this.isPlaying = false
   }
   init(data) {
-    this.bpm = data.bpm
-    this.music = data.music
+    this.data = data
+    this.tickFunctions = []
   }
-  create() {
-    this.beat = this.sound.add('beat')
+  
+  initTick() {
+    this.isPlaying = true
+    let time = 1000/(this.data.bpm/60)
+    this.sound.play(this.data.music)
     
+    const tick = () => {
+      for (const func of this.tickFunctions) {
+        func()
+      }
+      setTimeout(tick, time)
+    }
+    tick(time)
+    
+  }
+  
+  create() {
     this.orbit = new Orbit(this, 350, 250)
   
-    this.button4 = new Button(this,50,250,'test',0,()=>{
-      this.orbit.setTo(4)
+    this.button = new Button(this, 50, 370, 'test', 0, () => {
+      if (!this.isPlaying) {
+        this.initTick.bind(this)()
+      }
     })
-    this.button3 = new Button(this, 50, 290, 'test', 0, () => {
-      this.orbit.setTo(3)
+    
+    this.tickFunctions.push(()=>{
+      this.orbit.run()
     })
-    this.button2 = new Button(this, 50, 330, 'test', 0, () => {
-      this.orbit.setTo(2)
-    })
-    this.button1 = new Button(this, 50, 370, 'test', 0, () => {
-      this.orbit.setTo(1)
-    })
-    this.sound.play(this.music)
-    
-    this.start = this.getTime();
-    
-    //add a listener for when the screen is clicked
-
-    }
-    getTime() {
-      return window.performance.now()
-    }
-    showDelta() {
-        //subtract the start time from the time now
-        // 
-        let elapsed = this.getTime() - this.start;
-    
-        //log the result
-        this.delta = elapsed
-    
-        //reset the start time
-        this.start = this.getTime();
-    }
+  }
   
   
   update() {
-    this.orbit.run(this.bpm)
-    this.showDelta.bind(this)
   }
 }
