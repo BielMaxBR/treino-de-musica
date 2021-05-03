@@ -8,7 +8,7 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     this.isBeating = false
     
     this.line = this.scene.add.line(this.x, this.y, 0, 280, 0, 0, 0xffffff);
-    this.line.setLineWidth(5)
+    this.line.setLineWidth(3)
     
     this.sol = this.scene.add.sprite(this.x, this.y, 'sol')
     this.planeta = this.scene.add.sprite(this.x, this.y - 100, 'planeta')
