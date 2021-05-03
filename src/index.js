@@ -10,9 +10,3 @@ const config = {
 }
 
 let game = new Phaser.Game(config)
-
-let isBeating = false
-
-function update() {
-  
-}

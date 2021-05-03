@@ -1,4 +1,5 @@
 //import beatsrc from '../assets/kick.wav'
+let ready = false
 export default class Loading extends Phaser.Scene {
   constructor() {
     super("Loading")
@@ -10,7 +11,8 @@ export default class Loading extends Phaser.Scene {
     this.load.image('planeta', './src/assets/planeta.png')
   
     this.load.audio('beat','./src/assets/kick.wav')
-
+    this.load.audio('orbitando','./src/assets/orbitando.wav')
+    
     this.decodeSong = (key) => {
       var cache = this.cache.audio;
       var data = cache.get(key)
@@ -22,9 +24,13 @@ export default class Loading extends Phaser.Scene {
   create() {
     this.add.text(10,10, "loading...")
     console.log('loading...')
-    this.decodeSong('beat','./src/assets/kick.wav')
+    this.decodeSong('beat')
+    this.decodeSong('orbitando')
+    ready = true
   }
   update() {
-    this.scene.start("Game", {bpm:120})
+   //if(ready) {
+    this.scene.start("Game", {bpm:120,music:'orbitando'})
+    //}
   }
 }
