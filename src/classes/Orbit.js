@@ -5,10 +5,16 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     this.x = x
     this.y = y
     this.orbita = 4
+    this.isBeating = false
+    
+    this.line = this.scene.add.line(this.x, this.y, 0, 280, 0, 0, 0xffffff);
+    this.line.setLineWidth(5)
+    
     this.sol = this.scene.add.sprite(this.x, this.y, 'sol')
     this.planeta = this.scene.add.sprite(this.x, this.y - 100, 'planeta')
   
-    this.isBeating = false
+    
+    
   }
   
   setOrbita(val) {
@@ -30,8 +36,7 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
   if (this.planeta.x-this.sol.x > -7 && this.planeta.x-this.sol.x < 7) { 
     if (!this.isBeating) {
       this.isBeating = true
-      //button.x += 20
-      this.scene.beat.play()
+      this.scene.sound.play('beat')
     }
   }
   else {

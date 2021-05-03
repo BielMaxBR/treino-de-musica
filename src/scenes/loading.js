@@ -10,16 +10,21 @@ export default class Loading extends Phaser.Scene {
     this.load.image('planeta', './src/assets/planeta.png')
   
     this.load.audio('beat','./src/assets/kick.wav')
+
+    this.decodeSong = (key) => {
+      var cache = this.cache.audio;
+      var data = cache.get(key)
+      this.sound.decodeAudio(key,data)
+      
+    }
+
   }
   create() {
     this.add.text(10,10, "loading...")
-    //this.sound.decodeAudio('beat', beatsrc)
     console.log('loading...')
+    this.decodeSong('beat','./src/assets/kick.wav')
   }
   update() {
-    //if (this.sound.on('decoded', 'beat')) {
-      this.scene.start("Game", {bpm:120});
-      //}
-    
+    this.scene.start("Game", {bpm:120})
   }
 }
