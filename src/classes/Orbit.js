@@ -5,6 +5,7 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     this.x = x
     this.y = y
     this.orbita = 4
+    this.proxOrbita = 4
     this.isBeating = false
     
     this.line = this.scene.add.line(this.x, this.y, 0, 280, 0, 0, 0xffffff);
@@ -21,7 +22,12 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     this.orbita = 
     Math.min(Math.max(val, 1), 4);
   }
-
+  
+  setTo(val) {
+    this.proxOrbita = 
+    Math.min(Math.max(val, 1), 4);
+  }
+  
   run(bpm) {
     let pos = Phaser.Math.RotateAroundDistance(
     new Phaser.Geom.Point(this.planeta.x,this.planeta.y),
@@ -37,6 +43,7 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     if (!this.isBeating) {
       this.isBeating = true
       this.scene.sound.play('beat')
+      this.setOrbita(this.proxOrbita)
     }
   }
   else {
