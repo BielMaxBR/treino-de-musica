@@ -10,7 +10,7 @@ export default class Loading extends Phaser.Scene {
     this.load.image('sol', './src/assets/sol.png')
     this.load.image('planeta', './src/assets/planeta.png')
   
-    this.load.audio('beat','./src/assets/kick.wav')
+    this.load.audio('beat','./src/assets/kick.mp3')
     this.load.audio('orbitando','./src/assets/orbitando.wav')
     
     this.decodeSong = (key) => {
@@ -29,8 +29,8 @@ export default class Loading extends Phaser.Scene {
     ready = true
   }
   update() {
-   //if(ready) {
+   if(ready) {
     this.scene.start("Game", {bpm:150,music:'orbitando'})
-    //}
+    }
   }
 }
