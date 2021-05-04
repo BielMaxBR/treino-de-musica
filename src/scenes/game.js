@@ -21,14 +21,16 @@ export default class Game extends Phaser.Scene {
       for (const func of this.tickFunctions) {
         func()
       }
-      let currentTime = window.performance.now()
-      let waitTime = bps
-      if (currentTime<lastTime+bps) {
-        this.testxt = `${(lastTime+bps)-currentTime} -- ${bps}`
-        waitTime = (lastTime+bps)-currentTime
-      }
-      lastTime = currentTime+waitTime
-      setTimeout(tick, waitTime)
+
+      //let currentTime = window.performance.now()
+      //let waitTime = bps
+      //if (currentTime<lastTime+bps) {
+      //  this.testxt = `${(lastTime+bps)-currentTime} -- ${bps}`
+      //  waitTime = (lastTime+bps)-currentTime-5
+      //}
+      //lastTime = currentTime+waitTime
+      //this.orbit.sol.setScale(1)
+      setTimeout(tick,bps-16)
     }
     
     tick()
