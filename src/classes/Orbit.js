@@ -36,6 +36,7 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     }
     else {
       this.isBeating = false
+      this.scene.sound.play('beat')
       this.sol.setScale(1)
     }
   
