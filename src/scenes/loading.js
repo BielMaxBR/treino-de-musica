@@ -6,6 +6,8 @@ export default class Loading extends Phaser.Scene {
   }
   
   preload() {
+    this.texto = this.add.text(10, 10, "loading...")
+    console.log('loading...')
     
     this.loadAndDecode = (key, path) => {
       this.load.audio(key,path)
@@ -24,13 +26,12 @@ export default class Loading extends Phaser.Scene {
     this.load.image('sol', './src/assets/sol.png')
     this.load.image('planeta', './src/assets/planeta.png')
     
-    this.loadAndDecode('beat', './src/assets/kick.mp3')
-    this.loadAndDecode('orbitando', './src/assets/megalo.mp3')
+    this.loadAndDecode('beat', './src/assets/kick.ogg')
+    this.loadAndDecode('orbitando', './src/assets/megalo.ogg')
 
   }
   create() {
-    this.texto = this.add.text(10,10, "loading...")
-    console.log('loading...')
+    
     document.addEventListener("visibilitychange", (a)=>{
       if (document.visibilityState === 'visible') {
         this.game.sound.resumeAll();
