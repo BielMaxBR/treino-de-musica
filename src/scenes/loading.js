@@ -27,7 +27,7 @@ export default class Loading extends Phaser.Scene {
 
   }
   create() {
-    this.add.text(10,10, "loading...")
+    this.texto = this.add.text(10,10, "loading...")
     console.log('loading...')
     this.decodeSong('beat','./src/assets/kick.mp3')
     this.decodeSong('orbitando','./src/assets/megalo.mp3')

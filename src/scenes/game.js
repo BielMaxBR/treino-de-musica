@@ -22,17 +22,21 @@ export default class Game extends Phaser.Scene {
         func()
       }
       let currentTime = window.performance.now()
-      let waitTime = (lastTime+bps) - currentTime-100
-      
-      lastTime = lastTime+bps
+      let waitTime = bps
+      if (currentTime<lastTime+bps) {
+        this.testxt = `${(lastTime+bps)-currentTime} -- ${bps}`
+        waitTime = (lastTime+bps)-currentTime
+      }
+      lastTime = currentTime+waitTime
       setTimeout(tick, waitTime)
     }
     
-    tick(bps)
+    tick()
     
   }
   
   create() {
+    this.texto = this.add.text(10,10,"iniciado")
     this.orbit = new Orbit(this, 350, 250)
   
     this.button = new Button(this, 50, 370, 'test', 0, () => {
@@ -40,7 +44,7 @@ export default class Game extends Phaser.Scene {
         this.initTick.bind(this)()
       }
     })
-    
+    console.log(this.texto)
     this.tickFunctions.push(()=>{
       this.orbit.run()
     })
@@ -48,5 +52,6 @@ export default class Game extends Phaser.Scene {
   
   
   update() {
+    this.texto.text = this.testxt
   }
 }
