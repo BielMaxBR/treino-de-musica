@@ -13,24 +13,27 @@ export default class Game extends Phaser.Scene {
   
   initTick() {
     this.isPlaying = true
-    let bps = 1000/(this.data.bpm/60)
-    let lastTime = window.performance.now()
+    let bps = this.data.bpm/60
+    let ms = 1000/bps
+    let previous = window.performance.now()
+    let lag = 0
     this.sound.play(this.data.music)
     
     const tick = () => {
-      for (const func of this.tickFunctions) {
-        func()
+      let current = window.performance.now()
+      let ellapsed = current - previous
+      previous = current
+      lag += ellapsed
+      
+      while (lag >= ms) {
+        for (const func of this.tickFunctions) {
+          func()
+        }
+        lag -= ms
+      
+        this.testxt = `${lag} -- ${ms}`
       }
-
-      //let currentTime = window.performance.now()
-      //let waitTime = bps
-      //if (currentTime<lastTime+bps) {
-      //  this.testxt = `${(lastTime+bps)-currentTime} -- ${bps}`
-      //  waitTime = (lastTime+bps)-currentTime-5
-      //}
-      //lastTime = currentTime+waitTime
-      //this.orbit.sol.setScale(1)
-      setTimeout(tick,bps-16)
+      setTimeout(tick,ms)
     }
     
     tick()
