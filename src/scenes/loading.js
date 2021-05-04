@@ -11,13 +11,13 @@ export default class Loading extends Phaser.Scene {
     this.load.image('planeta', './src/assets/planeta.png')
   
     this.load.audio('beat','./src/assets/kick.mp3')
-    this.load.audio('orbitando','./src/assets/orbitando.wav')
-    
+    this.load.audio('orbitando','./src/assets/megalo.mp3')
+
     this.decodeSong = (key) => {
       var cache = this.cache.audio;
       var data = cache.get(key)
-      this.sound.decodeAudio(key,data)
-      
+      console.log(cache.entries)
+      // this.sound.decodeAudio(key,data)
     }
 
   }
@@ -30,7 +30,7 @@ export default class Loading extends Phaser.Scene {
   }
   update() {
    if(ready) {
-    this.scene.start("Game", {bpm:150,music:'orbitando'})
+    this.scene.start("Game", {bpm:120,music:'orbitando'})
     }
   }
 }

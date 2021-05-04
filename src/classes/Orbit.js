@@ -21,23 +21,23 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     250,
     Math.PI/64*4,
     100
-  )
-  
-  
-  this.planeta.x = pos.x
-  this.planeta.y = pos.y
-
-  if (this.planeta.x-this.sol.x > -7 && this.planeta.x-this.sol.x < 7 && this.planeta.y-this.sol.y < 0) { 
-    if (!this.isBeating) {
-      this.isBeating = true
-      this.scene.sound.play('beat')
-      this.sol.setScale(2)
+    )
+    
+    
+    this.planeta.x = pos.x
+    this.planeta.y = pos.y
+    
+    if (this.planeta.x-this.sol.x > -7 && this.planeta.x-this.sol.x < 7 && this.planeta.y-this.sol.y < 0) { 
+      if (!this.isBeating) {
+        this.isBeating = true
+        this.scene.sound.play('beat')
+        this.sol.setScale(2)
+      }
     }
-  }
-  else {
-    this.isBeating = false
-    this.sol.setScale(1)
-  }
+    else {
+      this.isBeating = false
+      this.sol.setScale(1)
+    }
   
   }
 }
