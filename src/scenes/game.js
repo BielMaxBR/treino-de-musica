@@ -15,14 +15,13 @@ export default class Game extends Phaser.Scene {
     this.isPlaying = true
     let bps = this.data.bpm/60
     let ms = 1000/bps
-    let previous = window.performance.now()
+    let previous = Date.now()
     //let lag = 0
     this.sound.play(this.data.music)
     
     const tick = () => {
-      let current = window.performance.now()
+      let current = Date.now()
       let ellapsed = current - previous
-      
       //lag += ellapsed
       
       //while (lag >= ms) {
@@ -32,11 +31,13 @@ export default class Game extends Phaser.Scene {
         //lag -= ms
       
         this.testxt = `${ellapsed} -- ${ms}`
-      previous = window.performance.now()
-      setTimeout(tick,ms)
+      previous = current
+      let lag = ellapsed-ms
+      if (lag < 0) lag = 0
+      setTimeout(tick,ms-lag)
     }
     
-    tick()
+    setTimeout(tick,3)
     
   }
   
