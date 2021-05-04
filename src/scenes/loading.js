@@ -11,26 +11,39 @@ export default class Loading extends Phaser.Scene {
     this.load.image('planeta', './src/assets/planeta.png')
   
     this.load.audio('beat','./src/assets/kick.mp3')
-    this.load.audio('orbitando','./src/assets/megalo.mp3')
+    this.load.audio('orbitando','./src/assets/orbitando.mp3')
 
-    this.decodeSong = (key) => {
+    this.decodeSong = (key, path) => {
       var cache = this.cache.audio;
       var data = cache.get(key)
-      console.log(cache.entries)
-      // this.sound.decodeAudio(key,data)
+      var request = new XMLHttpRequest();
+      request.open("GET", path, true);
+      request.responseType = "arraybuffer";
+      request.onload = () => {
+        this.sound.decodeAudio(key,request.response)
+      };
+      request.send()
     }
 
   }
   create() {
     this.add.text(10,10, "loading...")
     console.log('loading...')
-    this.decodeSong('beat')
-    this.decodeSong('orbitando')
+    this.decodeSong('beat','./src/assets/kick.mp3')
+    this.decodeSong('orbitando','./src/assets/orbitando.mp3')
+    document.addEventListener("visibilitychange", (a)=>{
+      if (document.visibilityState === 'visible') {
+        this.game.sound.resumeAll();
+      } else {
+        this.game.sound.pauseAll();
+      }
+
+    });
     ready = true
   }
   update() {
    if(ready) {
-    this.scene.start("Game", {bpm:120,music:'orbitando'})
+    this.scene.start("Game", {bpm:150,music:'orbitando'})
     }
   }
 }
