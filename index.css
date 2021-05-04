@@ -21,7 +21,7 @@ canvas {
 
 @media(max-width: 720px){
   canvas {
-    image-rendering: pixelated;
+    /*image-rendering: pixelated;*/
     position: relative;
     width: 95%;
     max-height: 720px;

@@ -13,7 +13,7 @@ export default class Game extends Phaser.Scene {
   
   initTick() {
     this.isPlaying = true
-    let bps = this.data.bpm/60*2
+    let bps = this.data.bpm/60
     let ms = 1000/bps
     let previous = Date.now()
     //let lag = 0
@@ -37,7 +37,7 @@ export default class Game extends Phaser.Scene {
       setTimeout(tick,ms-lag)
     }
     
-    setTimeout(tick,3)
+    setTimeout(tick,90)
     
   }
   

@@ -10,7 +10,8 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     this.line.setLineWidth(3)
     
     this.sol = this.scene.add.sprite(this.x, this.y, 'sol')
-    this.planeta = this.scene.add.sprite(this.x, this.y - 100, 'planeta')
+    this.planeta = this.scene.add.sprite(this.x, this.y - 100, 'sol')
+    this.planeta.setScale(0.5)
   
   }
   
@@ -19,7 +20,7 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     new Phaser.Geom.Point(this.planeta.x,this.planeta.y),
     350,
     250,
-    Math.PI/128*4,
+    Math.PI/64*4,
     100
     )
     
