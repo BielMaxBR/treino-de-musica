@@ -19,7 +19,7 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     new Phaser.Geom.Point(this.planeta.x,this.planeta.y),
     350,
     250,
-    Math.PI/64*4,
+    Math.PI/128*4,
     100
     )
     

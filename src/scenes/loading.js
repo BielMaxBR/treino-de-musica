@@ -6,14 +6,9 @@ export default class Loading extends Phaser.Scene {
   }
   
   preload() {
-    this.load.image('test', './src/assets/test.png')
-    this.load.image('sol', './src/assets/sol.png')
-    this.load.image('planeta', './src/assets/planeta.png')
-  
-    this.load.audio('beat','./src/assets/kick.mp3')
-    this.load.audio('orbitando','./src/assets/megalo.mp3')
-
-    this.decodeSong = (key, path) => {
+    
+    this.loadAndDecode = (key, path) => {
+      this.load.audio(key,path)
       var cache = this.cache.audio;
       var data = cache.get(key)
       var request = new XMLHttpRequest();
@@ -24,13 +19,18 @@ export default class Loading extends Phaser.Scene {
       };
       request.send()
     }
+    
+    this.load.image('test', './src/assets/test.png')
+    this.load.image('sol', './src/assets/sol.png')
+    this.load.image('planeta', './src/assets/planeta.png')
+    
+    this.loadAndDecode('beat', './src/assets/kick.mp3')
+    this.loadAndDecode('orbitando', './src/assets/megalo.mp3')
 
   }
   create() {
     this.texto = this.add.text(10,10, "loading...")
     console.log('loading...')
-    this.decodeSong('beat','./src/assets/kick.mp3')
-    this.decodeSong('orbitando','./src/assets/megalo.mp3')
     document.addEventListener("visibilitychange", (a)=>{
       if (document.visibilityState === 'visible') {
         this.game.sound.resumeAll();
