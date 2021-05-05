@@ -34,10 +34,10 @@ export default class Loading extends Phaser.Scene {
     document.addEventListener("visibilitychange", (a) => {
       if (document.visibilityState === 'visible') {
         //this.game.sound.resumeAll();
-        this.scene.resume()
+        //this.scene.resume()
       } else {
         //this.game.sound.pauseAll();
-        this.scene.pause('Game')
+        //this.scene.pause('Game')
       }
 
     });
