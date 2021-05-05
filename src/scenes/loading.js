@@ -26,7 +26,7 @@ export default class Loading extends Phaser.Scene {
     this.load.image('center', './src/assets/sol.png')
     this.load.image('pointer', './src/assets/sol.png')
     
-    this.loadAndDecode('beat', './src/assets/kick.ogg')
+    this.loadAndDecode('beat', './src/assets/kick.m4a')
     this.loadAndDecode('megalo', './src/assets/megalo.ogg')
 
   }
