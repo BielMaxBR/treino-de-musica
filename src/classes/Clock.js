@@ -16,6 +16,8 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     this.pointer = scene.add.sprite(this.x, this.y + 100, 'pointer')
     this.pointer.setScale(0.5)
     
+    this.tween = this.tweens.add({})
+    
   }
   
   run() {
