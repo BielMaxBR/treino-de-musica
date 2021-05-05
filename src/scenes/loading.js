@@ -23,8 +23,8 @@ export default class Loading extends Phaser.Scene {
     }
     
     this.load.image('test', './src/assets/test.png')
-    this.load.image('sol', './src/assets/sol.png')
-    this.load.image('planeta', './src/assets/planeta.png')
+    this.load.image('center', './src/assets/sol.png')
+    this.load.image('pointer', './src/assets/sol.png')
     
     this.loadAndDecode('beat', './src/assets/kick.ogg')
     this.loadAndDecode('megalo', './src/assets/megalo.ogg')

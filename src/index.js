@@ -1,4 +1,3 @@
-import Orbit from "./classes/Orbit.js";
 import Game from './scenes/game.js'
 import Loading from './scenes/loading.js'
 const config = {

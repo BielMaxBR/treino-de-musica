@@ -1,4 +1,4 @@
-import Orbit from '../classes/Orbit.js'
+import Clock from '../classes/Clock.js'
 import Button from '../classes/Button.js'
 
 export default class Game extends Phaser.Scene {
@@ -43,7 +43,7 @@ export default class Game extends Phaser.Scene {
   
   create() {
     this.texto = this.add.text(10,10,"iniciado")
-    this.orbit = new Orbit(this, 350, 250)
+    this.clock = new Clock(this, 350, 250)
   
     this.button = new Button(this, 50, 370, 'test', 0, () => {
       if (!this.isPlaying) {
@@ -52,12 +52,12 @@ export default class Game extends Phaser.Scene {
     })
     this.button.setScale(2)
     this.input.on('pointerdown',(e)=>{
-      if (this.orbit.isBeating) {
+      if (this.clock.isBeating) {
         this.button.x+=64
       }
     })
     this.tickFunctions.push(()=>{
-      this.orbit.run()
+      this.clock.run()
     })
   }
   

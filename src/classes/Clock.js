@@ -12,15 +12,15 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     this.circulo = scene.add.circle(x, y, 100)
     this.circulo.setStrokeStyle(1,0xaaaaaa,0x999999)
     
-    this.sol = scene.add.sprite(this.x, this.y, 'sol')
-    this.planeta = scene.add.sprite(this.x, this.y + 100, 'sol')
-    this.planeta.setScale(0.5)
+    this.center = scene.add.sprite(this.x, this.y, 'center')
+    this.pointer = scene.add.sprite(this.x, this.y + 100, 'pointer')
+    this.pointer.setScale(0.5)
     
   }
   
   run() {
     let pos = Phaser.Math.RotateAroundDistance(
-    new Phaser.Geom.Point(this.planeta.x,this.planeta.y),
+    new Phaser.Geom.Point(this.pointer.x,this.pointer.y),
     350,
     250,
     Math.PI/64*4,
@@ -28,19 +28,19 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     )
     
     
-    this.planeta.x = pos.x
-    this.planeta.y = pos.y
+    this.pointer.x = pos.x
+    this.pointer.y = pos.y
     
-    if (this.planeta.x-this.sol.x > -7 && this.planeta.x-this.sol.x < 7 && this.planeta.y-this.sol.y < 0) { 
+    if (this.pointer.x-this.center.x > -7 && this.pointer.x-this.center.x < 7 && this.pointer.y-this.center.y < 0) { 
       if (!this.isBeating) {
         this.isBeating = true
         this.scene.sound.play('beat')
-        this.sol.setScale(2)
+        this.center.setScale(2)
       }
     }
     else {
       this.isBeating = false
-      this.sol.setScale(1)
+      this.center.setScale(1)
     }
   
   }
