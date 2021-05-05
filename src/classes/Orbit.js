@@ -6,13 +6,16 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     this.y = y
     this.isBeating = false
 
-    this.line = this.scene.add.line(this.x, this.y, 0, 280, 0, 0, 0xffffff);
+    this.line = scene.add.line(this.x, this.y, 0, 280, 0, 0, 0xdddddd);
     this.line.setLineWidth(3)
     
-    this.sol = this.scene.add.sprite(this.x, this.y, 'sol')
-    this.planeta = this.scene.add.sprite(this.x, this.y - 100, 'sol')
+    this.circulo = scene.add.circle(x, y, 100)
+    this.circulo.setStrokeStyle(1,0xaaaaaa,0x999999)
+    
+    this.sol = scene.add.sprite(this.x, this.y, 'sol')
+    this.planeta = scene.add.sprite(this.x, this.y + 100, 'sol')
     this.planeta.setScale(0.5)
-  
+    
   }
   
   run() {
@@ -37,7 +40,6 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     }
     else {
       this.isBeating = false
-      this.scene.sound.play('beat')
       this.sol.setScale(1)
     }
   

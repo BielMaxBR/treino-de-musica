@@ -27,7 +27,7 @@ export default class Loading extends Phaser.Scene {
     this.load.image('planeta', './src/assets/planeta.png')
     
     this.loadAndDecode('beat', './src/assets/kick.ogg')
-    this.loadAndDecode('orbitando', './src/assets/megalo.ogg')
+    this.loadAndDecode('megalo', './src/assets/megalo.ogg')
 
   }
   create() {
@@ -46,7 +46,7 @@ export default class Loading extends Phaser.Scene {
   }
   update() {
    if(ready) {
-    this.scene.start("Game", {bpm:124,music:'orbitando'})
+    this.scene.start("Game", {bpm:124,music:'megalo'})
     }
   }
 }

@@ -50,7 +50,12 @@ export default class Game extends Phaser.Scene {
         this.initTick.bind(this)()
       }
     })
-    console.log(this.texto)
+    this.button.setScale(2)
+    this.input.on('pointerdown',(e)=>{
+      if (this.orbit.isBeating) {
+        this.button.x+=64
+      }
+    })
     this.tickFunctions.push(()=>{
       this.orbit.run()
     })
