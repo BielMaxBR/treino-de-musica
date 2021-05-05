@@ -1,6 +1,6 @@
 export default class Orbit extends Phaser.GameObjects.GameObject {
   constructor(scene, x=250,y=250) {
-    super(scene, 'test')
+    super(scene, 'center')
     this.scene = scene
     this.x = x
     this.y = y
@@ -29,7 +29,7 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     new Phaser.Geom.Point(this.pointer.x,this.pointer.y),
     350,
     250,
-    Math.PI/64*4,
+    Math.PI/32,
     100
     )
     
@@ -46,6 +46,7 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     }
     else {
       this.isBeating = false
+      this.scene.beat.play()
       this.center.setScale(1)
     }
   
