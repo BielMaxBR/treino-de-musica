@@ -9,13 +9,12 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     this.line = scene.add.line(this.x, this.y, 0, 280, 0, 0, 0xdddddd);
     this.line.setLineWidth(3)
 
-    this.circulo = scene.add.circle(x, y, 100)
-    this.circulo.setStrokeStyle(1, 0xaaaaaa, 0x999999)
+    this.orbit = scene.add.circle(x, y, 100)
+    this.orbit.setStrokeStyle(1, 0xaaaaaa, 0x999999)
 
-    this.center = scene.add.sprite(this.x, this.y, 'center')
-    this.pointer = scene.add.sprite(this.x, this.y + 100, 'pointer')
+    this.center = scene.add.circle(x, y, 16,0xffffff)
+    this.pointer = scene.add.circle(x, y + 100, 8,0xffffff)
 
-    this.pointer.setScale(0.5)
 
     //this.tween = scene.tweens.add({
     //  target: this,

@@ -13,26 +13,32 @@ export default class Game extends Phaser.Scene {
 
   initTick() {
     this.isPlaying = true
+    this.music.play()
+    
     let bps = this.data.bpm / 60
     let ms = 1000 / bps
-    let previous = Date.now()
+    let first
+    let beatCounter = 1
     let lag = 0
-    this.music.play()
-
+    
     const tick = () => {
-      let current = window.performance.now()
-      let ellapsed = current - previous
-
-      this.clock.run()
-
+      let current = Date.now()
+      let ellapsed = current - (first+(ms*beatCounter))
+      
       lag = ellapsed - ms
       if (lag < 0) lag = 0
-      this.testxt = `${lag} -- ${ms}`
-      previous = current
+      this.testxt = `${current} -- ${first+(ms*beatCounter)}`
+      this.clock.run()
+
+      
+      beatCounter++
       setTimeout(tick, ms - lag)
     }
 
-    setTimeout(tick, 3)
+    setTimeout(()=>{
+      first = Date.now()
+      tick()
+    }, 50)
 
   }
 
@@ -47,7 +53,7 @@ export default class Game extends Phaser.Scene {
     this.texto = this.add.text(10, 10, "iniciado")
     this.clock = new Clock(this, 350, 250)
 
-    this.button = new Button(this, 50, 370, 'test', 0, () => {
+    this.button = new Button(this, 50, 370, 48, 48, 0xffffff, () => {
       if (!this.isPlaying) {
         this.initTick.bind(this)()
       }
