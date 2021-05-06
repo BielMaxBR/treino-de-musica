@@ -26,12 +26,19 @@ export default class Game extends Phaser.Scene {
       let ellapsed = current - (first+(ms*beatCounter))
       
       lag = ellapsed - ms
-      if (lag < 0) lag = 0
-      this.testxt = `${current} -- ${first+(ms*beatCounter)}`
-      this.clock.run()
-
       
+      if (lag < 0) lag = 0
+      this.testxt = `${lag} -- ${ms}`
+      this.clock.run()
       beatCounter++
+      
+      while (lag >= ms) {
+        this.clock.run()
+        lag-=ms
+        if (lag < 0) lag = 0
+        beatCounter++
+      }
+      
       setTimeout(tick, ms - lag)
     }
 
