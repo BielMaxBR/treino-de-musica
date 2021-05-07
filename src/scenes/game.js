@@ -17,35 +17,16 @@ export default class Game extends Phaser.Scene {
     
     let bps = this.data.bpm / 60
     let ms = 1000 / bps
-    let first
-    let beatCounter = 1
-    let lag = 0
     
     const tick = () => {
-      let current = Date.now()
-      let ellapsed = current - (first+(ms*beatCounter))
-      
-      lag = ellapsed - ms
-      
-      if (lag < 0) lag = 0
-      this.testxt = `${lag} -- ${ms}`
       this.clock.run()
-      beatCounter++
-      
-      while (lag >= ms) {
-        this.clock.run()
-        lag-=ms
-        if (lag < 0) lag = 0
-        beatCounter++
-      }
-      
-      setTimeout(tick, ms - lag)
     }
-
-    setTimeout(()=>{
-      first = Date.now()
-      tick()
-    }, 50)
+      const timer = this.time.addEvent({
+        delay: ms,
+        callback: tick,
+        callbackScope: this,
+        loop: true
+      })
 
   }
 
@@ -53,10 +34,7 @@ export default class Game extends Phaser.Scene {
     this.music = this.sound.add(this.data.music)
     this.beat = this.sound.add('beat')
 
-    //this.beat.once('complete',()=>{
-    //  this.beat.play()
-    //  this.beat.pause()
-    //})
+    
     this.texto = this.add.text(10, 10, "iniciado")
     this.clock = new Clock(this, 350, 250)
 
@@ -66,7 +44,6 @@ export default class Game extends Phaser.Scene {
       }
     })
     this.button.setScale(2)
-
 
     this.input.on('pointerdown', (e) => {
       if (this.clock.isBeating) {

@@ -1,4 +1,4 @@
-export default class Orbit extends Phaser.GameObjects.GameObject {
+export default class Clock extends Phaser.GameObjects.GameObject {
   constructor(scene, x = 250, y = 250) {
     super(scene, 'center')
     this.scene = scene
@@ -15,13 +15,12 @@ export default class Orbit extends Phaser.GameObjects.GameObject {
     this.center = scene.add.circle(x, y, 16,0xffffff)
     this.pointer = scene.add.circle(x, y + 100, 8,0xffffff)
 
-
+  
     //this.tween = scene.tweens.add({
     //  target: this,
     //  scale:{start:2,end:1},
     //  duration:300
     //})
-
   }
 
   run() {
