@@ -10,6 +10,11 @@ export default class Game extends Phaser.Scene {
     this.data = data
     this.tickFunctions = []
   }
+  
+  preload() {
+    console.log("carregado")
+    this.load.audio(this.data.music, this.data.path)
+  }
 
   initTick() {
     this.isPlaying = true
@@ -21,12 +26,12 @@ export default class Game extends Phaser.Scene {
     const tick = () => {
       this.clock.run()
     }
-      const timer = this.time.addEvent({
-        delay: ms,
-        callback: tick,
-        callbackScope: this,
-        loop: true
-      })
+    const timer = this.time.addEvent({
+      delay: ms,
+      callback: tick,
+      callbackScope: this,
+      loop: true
+    })
 
   }
 

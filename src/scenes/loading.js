@@ -1,4 +1,3 @@
-//import beatsrc from '../assets/kick.wav'
 let ready = false
 export default class Loading extends Phaser.Scene {
   constructor() {
@@ -6,31 +5,17 @@ export default class Loading extends Phaser.Scene {
   }
 
   preload() {
+    //this.load.path = "src/assets"
     this.texto = this.add.text(10, 10, "loading...")
     console.log('loading...')
 
-    this.loadAndDecode = (key, path) => {
-      this.load.audio(key, path)
-      //var request = new XMLHttpRequest();
-      //request.open("GET", path, true);
-      //request.responseType = "arraybuffer";
-      //request.onload = () => {
-      //  this.sound.decodeAudio(key,request.response)
-      //};
-      //request.send()
-    }
-
-    this.load.image('test', './src/assets/test.png')
-    this.load.image('center', './src/assets/sol.png')
-    this.load.image('pointer', './src/assets/sol.png')
-
-    this.loadAndDecode('beat', './src/assets/kick.m4a')
-    this.loadAndDecode('megalo', './src/assets/megalo.ogg')
-    //this.loadAndDecode('orbitando', './src/assets/orbitando.m4a')
-
+    this.load.audio('beat', './src/assets/kick.m4a')
+    
+    this.load.json('music',"./src/assets/music.json")
+    
   }
   create() {
-
+    this.musicData = this.cache.json.get('music')
     document.addEventListener("visibilitychange", (a) => {
       if (document.visibilityState === 'visible') {
         //this.game.sound.resumeAll();
@@ -45,11 +30,8 @@ export default class Loading extends Phaser.Scene {
   }
   update() {
     if (ready) {
-      this.scene.start("Game", {
-        bpm: 124,
-        music: 'megalo'
-
-      })
+      this.scene.start("Game", this.musicData)
     }
+    
   }
 }
