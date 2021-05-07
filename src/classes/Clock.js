@@ -1,3 +1,4 @@
+import Circle from "./Circle.js"
 export default class Clock extends Phaser.GameObjects.GameObject {
   constructor(scene, x = 250, y = 250) {
     super(scene, 'center')
@@ -6,15 +7,13 @@ export default class Clock extends Phaser.GameObjects.GameObject {
     this.y = y
     this.isBeating = false
 
-    this.line = scene.add.line(this.x, this.y, 0, 280, 0, 0, 0xdddddd);
+    this.line = scene.add.line(x, y, 0, 280, 0, 0, 0xdddddd);
     this.line.setLineWidth(3)
 
-    this.orbit = scene.add.circle(x, y, 100)
+    this.orbit = new Circle(scene, x, y, 100, 0x00, 0x000000)
     this.orbit.setStrokeStyle(1, 0xaaaaaa, 0x999999)
 
-    this.center = scene.add.circle(x, y, 16,0xffffff)
-    this.pointer = scene.add.circle(x, y + 100, 8,0xffffff)
-
+    this.center = new Circle(scene, x, y, 16)
   
     //this.tween = scene.tweens.add({
     //  target: this,
@@ -24,7 +23,7 @@ export default class Clock extends Phaser.GameObjects.GameObject {
   }
 
   run() {
-    let pos = Phaser.Math.RotateAroundDistance(
+    /*let pos = Phaser.Math.RotateAroundDistance(
       new Phaser.Geom.Point(this.pointer.x, this.pointer.y),
       350,
       250,
@@ -48,6 +47,6 @@ export default class Clock extends Phaser.GameObjects.GameObject {
       this.scene.beat.play()
       this.center.setScale(1)
     }
-
+  */
   }
 }
