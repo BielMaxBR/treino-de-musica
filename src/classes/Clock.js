@@ -9,8 +9,8 @@ export default class Clock extends Phaser.GameObjects.GameObject {
 
     this.isBeating = false
 
-    this.patterns = scene.data.patterns
-    this.track = scene.data.track
+    this.patterns = scene.level.patterns
+    this.track = scene.level.track
 
     this.beatIndex = 0
     this.playIndex = 1.6
@@ -56,6 +56,14 @@ export default class Clock extends Phaser.GameObjects.GameObject {
           duration: 200
         })
       }
+
+      if (note == 3) {
+        
+        // this.scene.cameras.main.tintFill = true
+        // console.log(this.scene.cameras.main.setTint)
+        // this.scene.cameras.main.setTintFill(0x55ff55,0x55ff55,0x55ff55,0x55ff55)
+      }
+
     } else {
       this.pointers.push(0)
     }
