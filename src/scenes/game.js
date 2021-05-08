@@ -8,7 +8,6 @@ export default class Game extends Phaser.Scene {
   }
   init(data) {
     this.data = data
-    this.tickFunctions = []
   }
   
   preload() {
@@ -24,7 +23,7 @@ export default class Game extends Phaser.Scene {
     let ms = 1000 / bps
     
     const tick = () => {
-      this.clock.run(ms)
+      this.clock.run()
     }
     const timer = this.time.addEvent({
       delay: ms,
@@ -39,21 +38,21 @@ export default class Game extends Phaser.Scene {
     this.music = this.sound.add(this.data.music)
     this.beat = this.sound.add('beat')
 
-    
     this.texto = this.add.text(10, 10, "iniciado")
     this.clock = new Clock(this, 350, 250)
-
+    
     this.button = new Button(this, 50, 370, 48, 48, 0xffffff, () => {
       if (!this.isPlaying) {
         this.initTick.bind(this)()
       }
     })
     this.button.setScale(2)
-
+    
     this.input.on('pointerdown', (e) => {
       if (this.clock.isBeating) {
         this.button.x += 64
       }
+
       //this.beat.play()
       //this.button.scale += 1
     })
@@ -62,9 +61,6 @@ export default class Game extends Phaser.Scene {
     //  this.scene.pause('Game')
     //})
 
-    this.tickFunctions.push(() => {
-      this.clock.run()
-    })
   }
 
 

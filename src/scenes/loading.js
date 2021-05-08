@@ -12,7 +12,7 @@ export default class Loading extends Phaser.Scene {
     this.load.audio('beat', './src/assets/kick.m4a')
     
     this.load.json('music',"./src/assets/music.json")
-    
+
   }
   create() {
     this.musicData = this.cache.json.get('music')

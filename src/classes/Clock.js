@@ -13,8 +13,8 @@ export default class Clock extends Phaser.GameObjects.GameObject {
     this.track = scene.data.track
 
     this.beatIndex = 0
-    this.playIndex = 16
-    this.patternIndex = 0
+    this.playIndex = 1.6
+    this.trackIndex = 0
 
     this.pointers = [] //scene.add.container(x, y)
 
@@ -28,21 +28,19 @@ export default class Clock extends Phaser.GameObjects.GameObject {
 
   }
 
-  run(ms) {
+  run() {
+    let row = this.track[this.trackIndex]
+    let pattern = this.patterns[row]
 
-    let pattern = this.patterns[this.patternIndex]
     if (!pattern) {
-      this.patternIndex = 0
+      this.trackIndex = 0
+      row = this.track[0]
       pattern = this.patterns[0]
     }
+    
     let note = pattern[this.beatIndex]
 
-
-    if (this.beatIndex == pattern.length) {
-      this.patternIndex++
-      this.beatIndex = 0
-    }
-
+    // console.log(this.trackIndex,' ',this.beatIndex)
     if (note != 0) {
       let pointer = new Circle(this.scene, this.x, this.y + 100, 8)
 
@@ -50,15 +48,24 @@ export default class Clock extends Phaser.GameObjects.GameObject {
 
       if (this.pointers.length > 32) pointer.fillColor = 0xaaaaff
 
+      if (note == 2) {
+        this.scene.tweens.add({
+          targets: this.scene.cameras.main,
+          zoom: { start: 0.8, to: 1},
+          ease: 'Bounce',
+          duration: 200
+        })
+      }
     } else {
       this.pointers.push(0)
     }
 
-    if (this.pointers.length == 33) {
-      this.pointers.shift()
-    }
-
     this.beatIndex++
+
+    if (this.beatIndex == pattern.length) {
+      this.trackIndex++
+      this.beatIndex = 0
+    }
 
     this.pointers.forEach(pointer => {
       if (pointer == 0) return;
@@ -69,18 +76,23 @@ export default class Clock extends Phaser.GameObjects.GameObject {
         (2 * Math.PI) / 32,
         100
       )
-
-      //pointer.x = pos.x
-      //pointer.y = pos.y
-
-      let tween = this.scene.tweens.add({
+      this.scene.beat.play()
+      this.scene.tweens.add({
         targets: pointer,
         x: pos.x,
         y: pos.y,
         ease: 'Bounce',
-        duration: ms / 2.5
+        duration: 70
       })
-      //tween.play()
+
     })
+
+    if (this.pointers.length > 32) {
+      let value = this.pointers[0]
+      this.pointers.shift()
+      if (value!=0) {
+        value.destroy()
+      }
+    }
   }
 }
