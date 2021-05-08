@@ -33,21 +33,30 @@ export default class Game extends Phaser.Scene {
     })
 
   }
-
+  changeColors(color) {
+    this.globalColor = color
+    for (let obj of this.objects) {
+      if (obj) {
+        obj.fillColor = color
+      } 
+    }
+  }
   create() {
+    this.objects = []
+    this.globalColor = 0xffffff
     this.music = this.sound.add(this.level.music)
     this.beat = this.sound.add('beat')
 
     this.texto = this.add.text(10, 10, "iniciado")
     this.clock = new Clock(this, 350, 250)
 
-    this.button = new Button(this, 50, 370, 48, 48, 0xffaaff, () => {
+    this.button = new Button(this, 50, 370, 48, 48, this.globalColor, () => {
       if (!this.isPlaying) {
         this.initTick.bind(this)()
       }
     })
     this.button.setScale(2)
-
+    this.objects.push(this.button)
     this.input.on('pointerdown', (e) => {
       if (this.clock.isBeating) {
         this.button.x += 64
