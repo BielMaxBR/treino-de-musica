@@ -35,8 +35,6 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    this.shader = this.renderer.pipelines.get('shader');
-    this.cameras.main.setPipeline(this.shader)
     this.music = this.sound.add(this.level.music)
     this.beat = this.sound.add('beat')
 
