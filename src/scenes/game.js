@@ -24,7 +24,7 @@ export default class Game extends Phaser.Scene {
     let ms = 1000 / bps
     
     const tick = () => {
-      this.clock.run()
+      this.clock.run(ms)
     }
     const timer = this.time.addEvent({
       delay: ms,
@@ -55,7 +55,7 @@ export default class Game extends Phaser.Scene {
         this.button.x += 64
       }
       //this.beat.play()
-      this.button.scale += 1
+      //this.button.scale += 1
     })
 
     //this.pause = new Button(this,650,50,"test",0,()=>{

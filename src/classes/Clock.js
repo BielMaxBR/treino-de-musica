@@ -26,37 +26,17 @@ export default class Clock extends Phaser.GameObjects.GameObject {
 
     this.center = new Circle(scene, x, y, 16)
 
-    //this.tween = scene.tweens.add({
-    //  target: this,
-    //  scale:{start:2,end:1},
-    //  duration:300
-    //})
-    //
   }
 
-  run() {
+  run(ms) {
 
     let pattern = this.patterns[this.patternIndex]
     if (!pattern) {
       this.patternIndex = 0
-      pattern = this.patterns[this.patternIndex]
+      pattern = this.patterns[0]
     }
     let note = pattern[this.beatIndex]
 
-    this.pointers.forEach(pointer => {
-      if (pointer == 0) return;
-      let pos = Phaser.Math.RotateAroundDistance(
-        new Phaser.Geom.Point(pointer.x, pointer.y),
-        350,
-        250,
-        (2*Math.PI) / 32,
-        100
-      )
-      //console.log(pointer)
-      pointer.x = pos.x
-      pointer.y = pos.y
-
-    })
 
     if (this.beatIndex == pattern.length) {
       this.patternIndex++
@@ -64,37 +44,43 @@ export default class Clock extends Phaser.GameObjects.GameObject {
     }
 
     if (note != 0) {
-      let firstValue = this.pointers[0]
-      if (!firstValue) firstValue = 0
-      if (firstValue != 0 && this.pointers.length == 32) {
-        this.pointers.push(firstValue)
-      } else {
-        let pointer = new Circle(this.scene, this.x, this.y + 100, 8)
-        this.pointers.push(pointer)
-      }
+      let pointer = new Circle(this.scene, this.x, this.y + 100, 8)
+
+      this.pointers.push(pointer)
+
+      if (this.pointers.length > 32) pointer.fillColor = 0xaaaaff
 
     } else {
       this.pointers.push(0)
     }
-    if (this.pointers.length == 32) {
+
+    if (this.pointers.length == 33) {
       this.pointers.shift()
     }
+
     this.beatIndex++
 
+    this.pointers.forEach(pointer => {
+      if (pointer == 0) return;
+      let pos = Phaser.Math.RotateAroundDistance(
+        new Phaser.Geom.Point(pointer.x, pointer.y),
+        350,
+        250,
+        (2 * Math.PI) / 32,
+        100
+      )
 
-    /*
-    if (this.pointer.x - this.center.x > -7 && this.pointer.x - this.center.x < 7 && this.pointer.y - this.center.y < 0) {
-      if (!this.isBeating) {
-        this.isBeating = true
-        this.scene.sound.play('beat')
-        this.center.setScale(2)
-      }
-    }
-    else {
-      this.isBeating = false
-      this.scene.beat.play()
-      this.center.setScale(1)
-    }
-  */
+      //pointer.x = pos.x
+      //pointer.y = pos.y
+
+      let tween = this.scene.tweens.add({
+        targets: pointer,
+        x: pos.x,
+        y: pos.y,
+        ease: 'Bounce',
+        duration: ms / 2.5
+      })
+      //tween.play()
+    })
   }
 }
