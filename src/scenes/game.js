@@ -36,14 +36,14 @@ export default class Game extends Phaser.Scene {
   changeColors(color) {
     this.globalColor = color
 
-    let backColor = color / 15
+    let backColor = Phaser.Math.Linear(0x000000, color, 0.5);
 
     //this.background.fillColor = backColor
     this.clock.orbit.fillColor = backColor
 
     for (let obj of this.objects) {
       if (obj) {
-        let result = Phaser.Math.Linear(color, 0x000000, 0.5);
+        let result = Phaser.Math.Linear(color, 0xffffff, 0.5);
         obj.fillColor = color
       }
     }

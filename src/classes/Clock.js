@@ -26,12 +26,16 @@ export default class Clock extends Phaser.GameObjects.GameObject {
 
     this.center = new Circle(scene, x, y, 16, this.scene.globalColor)
 
-    // this.scene.objects.push(this.orbit)
-    // this.scene.objects.push(this.line)
     this.scene.objects.push(this.center)
   }
 
   run() {
+
+    if (this.beatIndex == 32) {
+      this.trackIndex++
+      this.beatIndex = 0
+    }
+
     let row = this.track[this.trackIndex]
     let pattern = this.patterns[row]
 
@@ -43,68 +47,84 @@ export default class Clock extends Phaser.GameObjects.GameObject {
 
     let note = pattern[this.beatIndex].toString()
 
-    // console.log(this.trackIndex,' ',this.beatIndex)
     if (note != "0") {
-      //console.log(this.scene.globalColor)
       if (note[0] == "1") {
-        let pointer = new Circle(this.scene, this.x, this.y + 100, 8, this.scene.globalColor)
+        let pointer = new Circle(this.scene, this.x, this.y + 100, 8, this.scene.globalColor, 0xffffff)
+
         pointer.fillColor = this.scene.globalColor
-        this.pointers.push(pointer)
+        pointer.name = Date.now()
+        this.pointers.unshift(pointer)
         this.scene.objects.push(pointer)
       }
       if (note.indexOf("2") != -1) {
         this.scene.tweens.add({
           targets: this.scene.cameras.main,
-          zoom: { start: 0.9, to: 1 },
+          zoom: { start: 1.1, to: 1 },
           ease: 'Bounce',
-          duration: 200
+          duration: 100
         })
       }
 
       if (note.indexOf("3") != -1) {
-        let color = Phaser.Math.Between(0x444444, 0xffffff)
+        let color = Phaser.Math.Between(0x888888, 0xffffff)
 
         this.scene.changeColors(color)
       }
 
     } else {
-      this.pointers.push(0)
+      let pointer = new Circle(this.scene, this.x, this.y + 100, 0, 0x000000, 0x000000)
+
+      this.pointers.unshift(0)
     }
 
     this.beatIndex++
 
-    if (this.beatIndex == pattern.length) {
-      this.trackIndex++
-      this.beatIndex = 0
+    if (this.pointers.length >= 32) {
+      if (this.pointers[31] && this.pointers[31] != 0) {
+        this.pointers[31].destroy()
+      }
+      this.pointers.length = 31
     }
+    for (let i = 0; i < 32; i++) {
+      let pointer = this.pointers[i]
+      if (pointer && pointer != 0) {
+        let pos = Phaser.Math.RotateAroundDistance(
+          new Phaser.Geom.Point(pointer.x, pointer.y),
+          350,
+          250,
+          ((2 * Math.PI) / 32),
+          100
+        )
+        
+        let condenado = false
+        if (pointer.x == 369.50903220161285 && pointer.y == 348.078528040323) { condenado = true }
 
-    this.pointers.forEach(pointer => {
-      if (pointer == 0) return;
-      let pos = Phaser.Math.RotateAroundDistance(
-        new Phaser.Geom.Point(pointer.x, pointer.y),
-        350,
-        250,
-        (2 * Math.PI) / 32,
-        100
-      )
-      this.scene.beat.play()
-      this.scene.tweens.add({
-        targets: pointer,
-        x: pos.x,
-        y: pos.y,
-        ease: 'Bounce',
-        duration: 70
-      })
+        //this.scene.beat.play()
+        let duration = 100
+        if (i==0||i==31) duration = 50
+        let tween = this.scene.tweens.add({
+          targets: pointer,
+          x: pos.x,
+          y: pos.y,
+          ease: 'Bounce',
+          duration: duration
+        })
+        /*
+         *  pointer.x = pos.x
+         *  pointer.y = pos.y
+         */
 
-    })
+        tween.on('complete', _ => {
+          if (condenado) {
+            pointer.destroy()
+            this.pointers.pop()
+          }
 
-    if (this.pointers.length > 32) {
-      let value = this.pointers[0]
-      this.pointers.shift()
-      this.scene.objects.slice(this.scene.objects.indexOf(value), 1)
-      if (value != 0) {
-        value.destroy()
+        })
+        this.pointers.length = 31
+
       }
     }
   }
+
 }
