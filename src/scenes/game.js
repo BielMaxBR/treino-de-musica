@@ -9,7 +9,7 @@ export default class Game extends Phaser.Scene {
   init(level) {
     this.level = level
   }
-  
+
   preload() {
     console.log("carregado")
     this.load.audio(this.level.music, this.level.path)
@@ -18,10 +18,10 @@ export default class Game extends Phaser.Scene {
   initTick() {
     this.isPlaying = true
     this.music.play()
-    
+
     let bps = this.level.bpm / 60
     let ms = 1000 / bps
-    
+
     const tick = () => {
       this.clock.run()
     }
@@ -35,13 +35,21 @@ export default class Game extends Phaser.Scene {
   }
   changeColors(color) {
     this.globalColor = color
+
+    let backColor = color / 15
+
+    this.background.fillColor = backColor
+    this.clock.orbit.fillColor = backColor
+
     for (let obj of this.objects) {
       if (obj) {
+        let result = Phaser.Math.Linear(color, 0x000000, 0.5);
         obj.fillColor = color
-      } 
+      }
     }
   }
   create() {
+    this.background = this.add.rectangle(350, 250, 3000, 3000, 0x000000)
     this.objects = []
     this.globalColor = 0xffffff
     this.music = this.sound.add(this.level.music)
@@ -74,6 +82,6 @@ export default class Game extends Phaser.Scene {
   }
   update() {
     this.texto.text = this.game.loop.actualFps
-    
+
   }
 }

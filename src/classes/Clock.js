@@ -19,13 +19,13 @@ export default class Clock extends Phaser.GameObjects.GameObject {
     this.pointers = [] //scene.add.container(x, y)
 
     this.orbit = new Circle(scene, x, y, 100, 0x00, 0x00)
-    this.orbit.setStrokeStyle(1, 0xaaaaaa+this.scene.globalColor, 0x999999)
-    
-    this.line = scene.add.line(x, y, 0, 280, 0, 0, 0xdddddd+this.scene.globalColor);
+    this.orbit.setStrokeStyle(1, 0xaaaaaa + this.scene.globalColor, 0x999999)
+
+    this.line = scene.add.line(x, y, 0, 280, 0, 0, 0xdddddd + this.scene.globalColor);
     this.line.setLineWidth(3)
-    
+
     this.center = new Circle(scene, x, y, 16, this.scene.globalColor)
-    
+
     // this.scene.objects.push(this.orbit)
     // this.scene.objects.push(this.line)
     this.scene.objects.push(this.center)
@@ -40,28 +40,31 @@ export default class Clock extends Phaser.GameObjects.GameObject {
       row = this.track[0]
       pattern = this.patterns[0]
     }
-    
-    let note = pattern[this.beatIndex]
+
+    let note = pattern[this.beatIndex].toString()
 
     // console.log(this.trackIndex,' ',this.beatIndex)
-    if (note != 0) {
-      console.log(this.scene.globalColor)
-      let pointer = new Circle(this.scene, this.x, this.y + 100, 8, this.scene.globalColor)
-
-      this.pointers.push(pointer)
-      this.scene.objects.push(pointer)
-
-      if (note == 2) {
+    if (note != "0") {
+      //console.log(this.scene.globalColor)
+      if (note[0] == "1") {
+        let pointer = new Circle(this.scene, this.x, this.y + 100, 8, this.scene.globalColor)
+        pointer.fillColor = this.scene.globalColor
+        this.pointers.push(pointer)
+        this.scene.objects.push(pointer)
+      }
+      if (note.indexOf("2") != -1) {
         this.scene.tweens.add({
           targets: this.scene.cameras.main,
-          zoom: { start: 0.8, to: 1},
+          zoom: { start: 0.8, to: 1 },
           ease: 'Bounce',
           duration: 200
         })
       }
 
-      if (note == 3) {
-        this.scene.changeColors(0x3377aa)
+      if (note.indexOf("3") != -1) {
+        let color = Phaser.Math.Between(0x444444, 0xffffff)
+
+        this.scene.changeColors(color)
       }
 
     } else {
@@ -98,8 +101,8 @@ export default class Clock extends Phaser.GameObjects.GameObject {
     if (this.pointers.length > 32) {
       let value = this.pointers[0]
       this.pointers.shift()
-      this.scene.objects.slice(this.scene.objects.indexOf(value),1)
-      if (value!=0) {
+      this.scene.objects.slice(this.scene.objects.indexOf(value), 1)
+      if (value != 0) {
         value.destroy()
       }
     }

@@ -2,7 +2,7 @@ import Game from './scenes/game.js'
 import Loading from './scenes/loading.js'
 
 const config = {
-  type: Phaser.WEBGL,
+  type: Phaser.CANVAS,
   width: 700,
   height: 500,
   canvas: document.getElementById('canvas'),
