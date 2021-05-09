@@ -38,7 +38,7 @@ export default class Game extends Phaser.Scene {
 
     let backColor = color / 15
 
-    this.background.fillColor = backColor
+    //this.background.fillColor = backColor
     this.clock.orbit.fillColor = backColor
 
     for (let obj of this.objects) {
