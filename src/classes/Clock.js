@@ -55,7 +55,7 @@ export default class Clock extends Phaser.GameObjects.GameObject {
       if (note.indexOf("2") != -1) {
         this.scene.tweens.add({
           targets: this.scene.cameras.main,
-          zoom: { start: 0.8, to: 1 },
+          zoom: { start: 0.9, to: 1 },
           ease: 'Bounce',
           duration: 200
         })
