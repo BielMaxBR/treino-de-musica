@@ -1,5 +1,6 @@
 import Clock from '../classes/Clock.js'
 import Button from '../classes/Button.js'
+import Log from '../classes/Log.js'
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -11,7 +12,6 @@ export default class Game extends Phaser.Scene {
   }
 
   preload() {
-    console.log("carregado")
     this.load.audio(this.level.music, this.level.path)
   }
 
@@ -33,29 +33,37 @@ export default class Game extends Phaser.Scene {
     })
 
   }
+
+  invertColor(hexTripletColor) {
+    let color = hexTripletColor
+    color = 0xFFFFFF ^ color; // invert three bytes
+    return color;
+}
+
   changeColors(color) {
     this.globalColor = color
 
-    let backColor = Phaser.Math.Linear(0x000000, color, 0.5);
-
-    //this.background.fillColor = backColor
-    this.clock.orbit.fillColor = backColor
+    let backColor = this.invertColor(color)
+    this.background.fillColor = backColor
 
     for (let obj of this.objects) {
       if (obj) {
-        let result = Phaser.Math.Linear(color, 0xffffff, 0.5);
-        obj.fillColor = color
+        
+        obj.changeColor(color)
       }
     }
   }
   create() {
-    this.background = this.add.rectangle(350, 250, 3000, 3000, 0x000000)
-    this.objects = []
     this.globalColor = 0xffffff
+    this.background = this.add.rectangle(350, 250, 3000, 3000, this.invertColor(this.globalColor))
+    this.objects = []
     this.music = this.sound.add(this.level.music)
     this.beat = this.sound.add('beat')
 
-    this.texto = this.add.text(10, 10, "iniciado")
+    this.texto = new Log(this, 'iniciando')
+
+    this.objects.push(this.texto)
+    
     this.clock = new Clock(this, 350, 250)
 
     this.button = new Button(this, 50, 370, 48, 48, this.globalColor, () => {
@@ -65,6 +73,7 @@ export default class Game extends Phaser.Scene {
     })
     this.button.setScale(2)
     this.objects.push(this.button)
+
     this.input.on('pointerdown', (e) => {
       if (this.clock.isBeating) {
         this.button.x += 64
@@ -81,7 +90,7 @@ export default class Game extends Phaser.Scene {
 
   }
   update() {
-    this.texto.text = this.game.loop.actualFps
+    this.texto.setText(this.game.loop.actualFps)
 
   }
 }

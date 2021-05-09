@@ -5,4 +5,8 @@ export default class button extends Phaser.GameObjects.Rectangle {
     this.setInteractive()
     this.on('pointerdown', callback)
   }
+
+  changeColor(color) {
+    this.fillColor = Phaser.Math.Linear(color, 0xffffff, 0.5)
+  }
 }

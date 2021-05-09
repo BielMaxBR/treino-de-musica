@@ -7,7 +7,6 @@ export default class Loading extends Phaser.Scene {
   preload() {
     //this.load.path = "src/assets"
     this.texto = this.add.text(10, 10, "loading...")
-    console.log('loading...')
 
     this.load.audio('beat', './src/assets/kick.m4a')
     
@@ -19,10 +18,10 @@ export default class Loading extends Phaser.Scene {
     document.addEventListener("visibilitychange", (a) => {
       if (document.visibilityState === 'visible') {
         //this.game.sound.resumeAll();
-        //this.scene.resume()
+        this.game.scene.resume('Game')
       } else {
         //this.game.sound.pauseAll();
-        //this.scene.pause('Game')
+        this.game.scene.pause('Game')
       }
 
     });

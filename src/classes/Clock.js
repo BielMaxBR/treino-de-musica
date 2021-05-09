@@ -18,15 +18,29 @@ export default class Clock extends Phaser.GameObjects.GameObject {
 
     this.pointers = [] //scene.add.container(x, y)
 
-    this.orbit = new Circle(scene, x, y, 100, 0x00, 0x00)
-    this.orbit.setStrokeStyle(1, 0xaaaaaa + this.scene.globalColor, 0x999999)
-
-    this.line = scene.add.line(x, y, 0, 280, 0, 0, 0xdddddd + this.scene.globalColor);
+    this.line = scene.add.line(x, y, 0, 280, 0, 0, 0xdddddd + scene.globalColor);
     this.line.setLineWidth(3)
 
-    this.center = new Circle(scene, x, y, 16, this.scene.globalColor)
+    this.orbit = scene.add.circle(x, y, 100)
+    this.orbit.setStrokeStyle(1, 0x555555);
 
-    this.scene.objects.push(this.center)
+
+    this.center = new Circle(scene, x, y, 16, scene.globalColor)
+
+    this.changeColor = color => {
+      let result = Phaser.Math.Linear(color, 0xffffff, 0.5);
+      this.line.strokeColor = Phaser.Math.Linear(color, 0x555555, 0.5)
+      this.orbit.strokeColor = Phaser.Math.Linear(color, 0xdddddd, 0.5)
+      this.center.fillColor = result
+      for (let pointer of this.pointers) {
+        if (pointer && pointer.name != "null") {
+          pointer.fillColor = result
+          // console.log(pointer)
+        }
+      }
+    }
+
+    scene.objects.push(this)
   }
 
   run() {
@@ -48,13 +62,12 @@ export default class Clock extends Phaser.GameObjects.GameObject {
     let note = pattern[this.beatIndex].toString()
 
     if (note != "0") {
-      if (note[0] == "1") {
+      if (note.indexOf("1") != -1) {
         let pointer = new Circle(this.scene, this.x, this.y + 100, 8, this.scene.globalColor, 0xffffff)
 
-        pointer.fillColor = this.scene.globalColor
+        pointer.fillColor = Phaser.Math.Linear(this.scene.globalColor, 0xffffff, 0.5);
         pointer.name = Date.now()
         this.pointers.unshift(pointer)
-        this.scene.objects.push(pointer)
       }
       if (note.indexOf("2") != -1) {
         this.scene.tweens.add({
@@ -73,8 +86,8 @@ export default class Clock extends Phaser.GameObjects.GameObject {
 
     } else {
       let pointer = new Circle(this.scene, this.x, this.y + 100, 0, 0x000000, 0x000000)
-
-      this.pointers.unshift(0)
+      pointer.name = "null"
+      this.pointers.unshift(pointer)
     }
 
     this.beatIndex++
@@ -87,7 +100,7 @@ export default class Clock extends Phaser.GameObjects.GameObject {
     }
     for (let i = 0; i < 32; i++) {
       let pointer = this.pointers[i]
-      if (pointer && pointer != 0) {
+      if (pointer && pointer.name != "null") {
         let pos = Phaser.Math.RotateAroundDistance(
           new Phaser.Geom.Point(pointer.x, pointer.y),
           350,
@@ -99,13 +112,15 @@ export default class Clock extends Phaser.GameObjects.GameObject {
         let condenado = false
         if (pointer.x == 369.50903220161285 && pointer.y == 348.078528040323) { condenado = true }
 
-        //this.scene.beat.play()
+        this.scene.beat.play()
         let duration = 100
         if (i==0||i==31) duration = 50
+
         let tween = this.scene.tweens.add({
           targets: pointer,
           x: pos.x,
           y: pos.y,
+          scale: condenado ? 0 : 1,
           ease: 'Bounce',
           duration: duration
         })
