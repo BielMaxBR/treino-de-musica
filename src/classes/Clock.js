@@ -33,7 +33,7 @@ export default class Clock extends Phaser.GameObjects.GameObject {
       this.orbit.strokeColor = Phaser.Math.Linear(color, 0xdddddd, 0.5)
       this.center.fillColor = result
       for (let pointer of this.pointers) {
-        if (pointer && pointer.name != "null") {
+        if (pointer != null) {
           pointer.fillColor = result
           // console.log(pointer)
         }
@@ -44,7 +44,7 @@ export default class Clock extends Phaser.GameObjects.GameObject {
   }
 
   run() {
-
+    this.scene.beat.play()
     if (this.beatIndex == 32) {
       this.trackIndex++
       this.beatIndex = 0
@@ -72,7 +72,7 @@ export default class Clock extends Phaser.GameObjects.GameObject {
       if (note.indexOf("2") != -1) {
         this.scene.tweens.add({
           targets: this.scene.cameras.main,
-          zoom: { start: 1.1, to: 1 },
+          zoom: { start: 0.9, to: 1 },
           ease: 'Bounce',
           duration: 100
         })
@@ -85,9 +85,7 @@ export default class Clock extends Phaser.GameObjects.GameObject {
       }
 
     } else {
-      let pointer = new Circle(this.scene, this.x, this.y + 100, 0, 0x000000, 0x000000)
-      pointer.name = "null"
-      this.pointers.unshift(pointer)
+      this.pointers.unshift(null)
     }
 
     this.beatIndex++
@@ -100,7 +98,7 @@ export default class Clock extends Phaser.GameObjects.GameObject {
     }
     for (let i = 0; i < 32; i++) {
       let pointer = this.pointers[i]
-      if (pointer && pointer.name != "null") {
+      if (pointer != null) {
         let pos = Phaser.Math.RotateAroundDistance(
           new Phaser.Geom.Point(pointer.x, pointer.y),
           350,
@@ -108,19 +106,27 @@ export default class Clock extends Phaser.GameObjects.GameObject {
           ((2 * Math.PI) / 32),
           100
         )
-        
+
         let condenado = false
-        if (pointer.x == 369.50903220161285 && pointer.y == 348.078528040323) { condenado = true }
+        if (pointer.x == 369.50903220161285 && pointer.y == 348.078528040323) 
+        {
+          condenado = true 
+        }
 
-        this.scene.beat.play()
+        
         let duration = 100
-        if (i==0||i==31) duration = 50
-
+        let scaleTo = 1
+        if (i == 31) duration = 50
+        if (i == 0) {
+          pointer.scale = 0.2
+        } else if (condenado) {
+          scaleTo = 0.2
+        }
         let tween = this.scene.tweens.add({
           targets: pointer,
           x: pos.x,
           y: pos.y,
-          scale: condenado ? 0 : 1,
+          scale: scaleTo,
           ease: 'Bounce',
           duration: duration
         })
@@ -140,6 +146,7 @@ export default class Clock extends Phaser.GameObjects.GameObject {
 
       }
     }
+    
   }
 
 }

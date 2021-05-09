@@ -79,8 +79,9 @@ export default class Game extends Phaser.Scene {
         this.button.x += 64
       }
 
-      //this.beat.play()
-      //this.button.scale += 1
+      let color = Phaser.Math.Between(0x888888, 0xffffff)
+      
+      this.changeColors(color)
     })
 
     //this.pause = new Button(this,650,50,"test",0,()=>{
