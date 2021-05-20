@@ -1,6 +1,7 @@
 import Clock from '../classes/Clock.js'
 import Button from '../classes/Button.js'
 import Log from '../classes/Log.js'
+import Shader from '../shaders/shader.js'
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -54,6 +55,7 @@ export default class Game extends Phaser.Scene {
     }
   }
   create() {
+    this.cameras.main.setPostPipeline(new Shader(this.game))
     this.globalColor = 0xffffff
     this.background = this.add.rectangle(350, 250, 3000, 3000, this.invertColor(this.globalColor))
     this.objects = []
